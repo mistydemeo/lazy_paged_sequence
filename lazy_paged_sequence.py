@@ -7,7 +7,19 @@ class LazyPagedSequence(object):
 
     Because the length of the sequence is fixed and is known before any pages are fetched, this class is suitable for use with Django's Paginator class without inducing undue overhead.
 
-    An example
+    For example, you could use this to wrap a REST API which returns results in discrete pages. The following example uses an imaginary Twitter client, which returns pages of tweets from a user's timeline::
+
+        client = Twitter(**my_auth_details)
+        # Fetch the tweet count ahead of time, so the sequence knows the length to report
+        tweet_count = client.timeline(screen_name="mistydemeo")["total"]
+        seq = LazyPagedSequence(
+            lambda page, page_size: client.timeline(page=page, count=page_size, screen_name="mistydemeo")["tweets"],
+            page_size=30, length=tweet_count
+        )
+
+        # now we can access the seq's contents just like a list:
+        seq[0] #=> [{"text": "Here is the first tweet"}]
+        seq[50:70] #=> [{"text": "..."} ... ]
     """
 
     def __init__(self, page_func, page_size, length):
