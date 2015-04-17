@@ -26,7 +26,7 @@ class LazyPagedSequence(object):
         """
         :param function page_func: Function to be used to reify individual pages in the LazyPagedSequence's cache.
             page_func will be called with the following two functions:
-                * page, an integer representing the page to produce (with the first page assumed to be 0).
+                * page, an integer representing the page to produce (with the first page assumed to be 1).
                 * page_size, an integer representing the size of the page to fetch; this will always be the same number.
         :param integer page_size: The size of the pages.
         :param integer length: The total length of all items in this sequence.
