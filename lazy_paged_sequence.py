@@ -1,3 +1,8 @@
+try:
+    range = xrange
+except NameError:
+    pass
+
 class LazyPagedSequence(object):
     """
     LazyPagedSequence provides a read-only list-like interface to paged data structures of known length.
@@ -44,12 +49,12 @@ class LazyPagedSequence(object):
         """
         Determine the page number on which a given index will be located, using self.page_size. Assumes page count begins with 1.
         """
-        return index / self.page_size + 1
+        return int(index / self.page_size) + 1
 
     def __getitem__(self, index):
         if isinstance(index, slice):
             step = 1 if index.step is None else index.step
-            return [self.__getitem__(i) for i in xrange(index.start, index.stop, step)]
+            return [self.__getitem__(i) for i in range(index.start, index.stop, step)]
 
         if index > self._length:
             raise IndexError("LazyPagedSequence index out of range")
