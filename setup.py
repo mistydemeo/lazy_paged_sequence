@@ -5,5 +5,5 @@ setup(
     author="Misty De Meo",
     author_email="mistydemeo@gmail.com",
     license="AGPL",
-    version="0.1"
+    version="0.2"
 )
