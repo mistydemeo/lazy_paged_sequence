@@ -1,3 +1,5 @@
+from __future__ import division
+
 try:
     range = xrange
 except NameError:
@@ -49,7 +51,7 @@ class LazyPagedSequence(object):
         """
         Determine the page number on which a given index will be located, using self.page_size. Assumes page count begins with 1.
         """
-        return int(index / self.page_size) + 1
+        return int(index // self.page_size) + 1
 
     def __getitem__(self, index):
         if isinstance(index, slice):
